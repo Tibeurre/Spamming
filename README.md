@@ -1,4 +1,14 @@
-### COMMENT INSTALLER ET UTILISER
+# COMMENT INSTALLER ET UTILISER
+
+
+## FR :
+
+Rien de bien compliqué : téléchargez et exécutez le .exe (votre antivirus risque de pas forcément apprécier mais il ne trouvera rien de suspicieux donc l'exécutera après analyse)
+
+Attention cependant, le spam se lance juste après la demande de délai de spam. Soyez prêts (pour vite aller dans le chanel à spam) !
+
+Pour les curieux le code est aussi dispo dans le repo :D
+
 
 ## EN :
 
@@ -8,10 +18,3 @@ Be carfeul : the spamming starts right after the delay question. Be ready to swi
 
 For the few interested ones : the code can be found in the repo.
 
-## FR :
-
-Rien de bien compliqué : téléchargez et exécutez le .exe (votre antivirus risque de pas forcément apprécier mais il ne trouvera rien de suspicieux donc l'exécutera après analyse)
-
-Attention cependant, le spam se lance juste après la demande de délai de spam. Soyez prêts (pour vite aller dans le chanel à spam) !
-
-Pour les curieux le code est aussi dispo dans le repo :D
