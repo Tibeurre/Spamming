@@ -1,25 +1,21 @@
-from pynput.keyboard import Key, Controller
-from time import sleep
+import utils
 
 print("Salut petit farfadet malicieux voulant spam \n")
 
 spam = True
 
 while spam:
-    message = input("Quel message veux-tu spammer ? \n")
-    amount = int(input("\nCombien de fois veux-tu spammer ? \n"))
-    preparation = int(input("\nCombien de secondes veux-tu avant de commencer à spammer ? (attention, dès que tu appuyes sur Entrée c'est parti mon coquin) \n"))
 
-    print("LETS GOOOOOOOOOO")
+    todo = input("Que veux-tu faire petit farfadet malicieux ? \n 1. Spam un message \n 2. Déblatérer un texte  \n 3. Quitter \nTon choix : ")
 
-    keyboard = Controller()
-
-    sleep(preparation)
-
-    for _ in range(amount):
-        sleep(0.5)
-        keyboard.type(message)
-        keyboard.press(Key.enter)
+    if todo == "1":
+        utils.spam()
+    elif todo == "2":
+        utils.texte()
+    else:
+        break
     
     print("\nHihihihi c'est fait !")
     spam = input("\nOn respam autre chose ? (Y/N) \n").lower() == "y"
+
+print("A la prochaine mon minot;)\n")
