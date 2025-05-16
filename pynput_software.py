@@ -1,11 +1,10 @@
 import utils
 
-print("Salut petit farfadet malicieux voulant spam \n")
 
 spam = True
 
 while spam:
-
+    print("-------------------------------Start-------------------------------\n")
     todo = input("Que veux-tu faire petit farfadet malicieux ? \n 1. Spam un message \n 2. Déblatérer un texte  \n 3. Quitter \nTon choix : ")
 
     if todo == "1":

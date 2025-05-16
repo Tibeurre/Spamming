@@ -3,7 +3,7 @@ from time import sleep
 import os
 
 def spam():
-    message = input("Quel message veux-tu spammer ? \n")
+    message = input("\nQuel message veux-tu spammer ? \n")
     amount = int(input("\nCombien de fois veux-tu spammer ? \n"))
     preparation = int(input("\nCombien de secondes veux-tu avant de commencer à spammer ? (attention, dès que tu appuyes sur Entrée c'est parti mon coquin) \n"))
 
