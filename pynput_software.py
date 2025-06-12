@@ -19,6 +19,14 @@ def switch_to_texte_from_main():
     frame_accueil.pack_forget()  # Masquer le cadre d'accueil
     frame_texte.pack(pady=20, padx=20, fill="both", expand=True)  # Afficher le cadre texte
 
+def switch_to_main_from_img():
+    frame_image.pack_forget()  # Masquer le cadre image
+    frame_accueil.pack(pady=20, padx=20, fill="both", expand=True)  # Afficher le cadre d'accueil
+
+def switch_to_img_from_main():
+    frame_accueil.pack_forget()  # Masquer le cadre d'accueil
+    frame_image.pack(pady=20, padx=20, fill="both", expand=True)  # Afficher le cadre image
+
 # spam = True
 
 # while spam:
@@ -45,7 +53,7 @@ ctk.set_default_color_theme("blue")  # Options: "blue", "green", "dark-blue"
 
 # Fenêtre principale
 app = ctk.CTk()
-app.geometry("800x550")
+app.geometry("1100x600")
 app.title("Logiciel du Farfadet Malicieux")
 
 
@@ -72,8 +80,11 @@ button.grid(row=4, column=1, padx=20, pady=20)
 button = ctk.CTkButton(frame_accueil, text="Spam depuis script", command=switch_to_texte_from_main)
 button.grid(row=6, column=1, padx=20, pady=20)
 
+button = ctk.CTkButton(frame_accueil, text="Spam d'image", command=switch_to_img_from_main)
+button.grid(row=8, column=1, padx=20, pady=20)
+
 # Charge l'image depuis le fichier
-image_path = "image/farfadet.png"  # 🔁 Remplace avec le chemin correct
+image_path = "images/farfadet.png"  # 🔁 Remplace avec le chemin correct
 image = Image.open(image_path)
 
 # Crée un CTkImage
@@ -235,6 +246,121 @@ list_files(FILEPATH)  # ← remplace par ton chemin
 
 frame_texte.pack_forget()  # Masquer le cadre texte au démarrage
 
+
+## FRAME SPAM IMAGE
+
+## FRAME SPAM IMAGE
+
+# Création d’un cadre (frame)
+frame_image = ctk.CTkFrame(app)
+frame_image.pack(pady=20, padx=20, fill="both", expand=True)
+
+# Config layout 3 colonnes
+frame_image.grid_columnconfigure(0, weight=1)
+frame_image.grid_columnconfigure(1, weight=3)
+frame_image.grid_columnconfigure(2, weight=1)
+
+label_title_img = ctk.CTkLabel(frame_image, text="Spamming d'une image", font=ctk.CTkFont(size=20, weight="bold"))
+label_title_img.grid(row=0, column=1, padx=20, pady=20, sticky="n")
+
+frame_tools_img = ctk.CTkFrame(frame_image)
+frame_tools_img.grid(row=1, column=1, sticky="nsew", pady=10)
+
+FILEPATH_IMG = "./images"
+entry_path_img = ctk.CTkEntry(frame_tools_img, placeholder_text="Chemin du dossier si différent de './images'", width=250)
+entry_path_img.grid(row=2, column=2, padx=20, pady=10, sticky="e")
+
+def update_filepath_img():
+    global FILEPATH_IMG
+    FILEPATH_IMG = entry_path_img.get()
+    list_files_img(FILEPATH_IMG)
+
+btn_update_path_img = ctk.CTkButton(frame_tools_img, text="Update le chemin", command=update_filepath_img)
+btn_update_path_img.grid(row=2, column=3, padx=20, pady=10, sticky="e")
+
+prepa_time_img = ctk.CTkEntry(frame_tools_img, placeholder_text="Temps avant lancement", width=250)
+prepa_time_img.grid(row=2, column=0, padx=20, pady=10, sticky="w")
+
+amount_img = ctk.CTkEntry(frame_tools_img, placeholder_text="Nombre de spams", width=250)
+amount_img.grid(row=2, column=1, padx=20, pady=10, sticky="w")
+
+btn_retour_img = ctk.CTkButton(frame_image, text="Retour à l'accueil", command=switch_to_main_from_img)
+btn_retour_img.grid(row=5, column=1, padx=20, pady=20, sticky="w")
+
+# Frame centrale pour fichiers (grid 4x3)
+frame_fichiers_img = ctk.CTkFrame(frame_image)
+frame_fichiers_img.grid(row=3, column=1, sticky="nsew", pady=10)
+
+for col in range(3):
+    frame_fichiers_img.grid_columnconfigure(col, weight=1)
+
+for row in range(4):
+    frame_fichiers_img.grid_rowconfigure(row, weight=1)
+
+FILES_PER_PAGE_IMG = 12
+GRID_ROWS_IMG, GRID_COLS_IMG = 4, 3
+
+current_page_img = 0
+all_files_img = []
+buttons_img = []
+
+def list_files_img(path):
+    global all_files_img
+    all_files_img = [f for f in os.listdir(path) if os.path.isfile(os.path.join(path, f))]
+    show_page_img(0)
+
+def show_page_img(page_num):
+    global current_page_img
+    current_page_img = page_num
+
+    for b in buttons_img:
+        b.destroy()
+    buttons_img.clear()
+
+    start = page_num * FILES_PER_PAGE_IMG
+    end = start + FILES_PER_PAGE_IMG
+    files_to_show = all_files_img[start:end]
+
+    for idx, filename in enumerate(files_to_show):
+        row = idx // GRID_COLS_IMG
+        col = idx % GRID_COLS_IMG
+
+        btn_img = ctk.CTkButton(frame_fichiers_img, text=filename, command=lambda f=filename: on_file_click_img(f))
+        btn_img.grid(row=row, column=col, padx=10, pady=10, sticky="nsew")
+        buttons_img.append(btn_img)
+
+    update_nav_buttons_img()
+
+def update_nav_buttons_img():
+    total_pages = (len(all_files_img) - 1) // FILES_PER_PAGE_IMG
+    btn_prev_img.configure(state="normal" if current_page_img > 0 else "disabled")
+    btn_next_img.configure(state="normal" if current_page_img < total_pages else "disabled")
+
+def on_file_click_img(filename):
+    u.start_img(os.path.join(FILEPATH_IMG, filename), int(prepa_time_img.get()), int(amount_img.get()), app)
+
+def next_page_img():
+    show_page_img(current_page_img + 1)
+
+def prev_page_img():
+    show_page_img(current_page_img - 1)
+
+# Boutons de navigation
+nav_frame_img = ctk.CTkFrame(frame_image)
+nav_frame_img.grid(row=4, column=1, pady=10)
+
+btn_prev_img = ctk.CTkButton(nav_frame_img, text="←", command=prev_page_img)
+btn_prev_img.pack(side="left", padx=10)
+
+btn_next_img = ctk.CTkButton(nav_frame_img, text="→", command=next_page_img)
+btn_next_img.pack(side="right", padx=10)
+
+# Chargement des fichiers à l'init
+list_files_img(FILEPATH_IMG)
+
+# On masque le cadre image au départ
+frame_image.pack_forget()
+
+
 # Lancer l'application
 app.mainloop()
-
